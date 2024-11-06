@@ -1,10 +1,29 @@
 import { Button, Col, Form, Input, Modal, notification, Row } from 'antd';
 import { useEffect, useState } from 'react';
 
+import { gql, useLazyQuery } from '@apollo/client';
 export const PatientInfo = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [form] = Form.useForm();
+
+  // Graphql Query
+  const GET_USER_INFO = gql`
+    query {
+      user {
+        firstName
+        lastName
+        age
+        gender
+        email
+        password
+        race
+      }
+    }
+  `;
+
+  const [get_user_lazy_query, { data, loading, error }] =
+    useLazyQuery(GET_USER_INFO);
 
   // load initial data from localstorage if available
   useEffect(() => {
@@ -14,6 +33,11 @@ export const PatientInfo = () => {
     }
   }, [form]);
 
+  useEffect(() => {
+    get_user_lazy_query();
+  }, []);
+
+  console.log('Data', data);
   //handle form submission
   const onFinish = (values: any) => {
     localStorage.setItem('useFormData', JSON.stringify(values));
