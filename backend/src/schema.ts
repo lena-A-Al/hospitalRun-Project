@@ -4,7 +4,7 @@ export const typeDefs = gql`
   type Query {
     hello: String!
     user: [User!]!
-    medication: [Medication!]!
+    medication(searchTerm: String): [Medication!]!
   }
 
   type Mutation {

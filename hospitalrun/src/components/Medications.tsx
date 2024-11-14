@@ -1,14 +1,16 @@
 import { gql, useLazyQuery } from '@apollo/client';
-import { Col, Row, Spin, Table, Typography } from 'antd';
+import { Col, Input, Row, Spin, Table, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 
 export const Medications = () => {
   //local state
-  const [medications, setMedications] = useState<any>(undefined);
+  const [medications, setMedications] = useState<any[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
   // Graphql Query
-  const GET_Medications_INFO = gql`
-    query {
-      medication {
+  // GraphQL Query
+  const GET_MEDICATIONS_INFO = gql`
+    query GetMedications($searchTerm: String) {
+      medication(searchTerm: $searchTerm) {
         id
         genericName
         brandName
@@ -17,27 +19,39 @@ export const Medications = () => {
     }
   `;
 
-  console.log('medications', medications);
   const [
-    get_medication_lazy_query,
+    get_medications,
     {
       data: getMedicationsRes,
       loading: getMedicationsLoading,
       error: getMedicationsError,
     },
-  ] = useLazyQuery(GET_Medications_INFO);
+  ] = useLazyQuery(GET_MEDICATIONS_INFO);
 
+  // Fetch medications on component mount
   useEffect(() => {
-    get_medication_lazy_query();
+    get_medications(); // Fetch all medications initially
   }, []);
 
+  // Update medications when query result changes
   useEffect(() => {
     if (getMedicationsRes) {
-      setMedications(getMedicationsRes.medication);
+      setMedications(
+        getMedicationsRes.medication.map((med: any, index: number) => ({
+          ...med,
+          key: med.id || index,
+        })),
+      );
     }
   }, [getMedicationsRes]);
 
-  console.log('getMedicationsRes', getMedicationsRes);
+  const handleSearch = (value: string) => {
+    get_medications({ variables: { searchTerm: value || null } });
+  };
+
+  // const handleInputChange = (event: any) => {
+  //   setSearchTerm(event.target.value);
+  // };
 
   const renderMedicationsTable = () => {
     const columns: any[] = [
@@ -85,14 +99,38 @@ export const Medications = () => {
       </>
     );
   };
+
+  if (getMedicationsError) {
+    return (
+      <Typography.Text type="danger">
+        Error loading medications: {getMedicationsError.message}
+      </Typography.Text>
+    );
+  }
+
   return (
     <>
-      <Row style={{ width: '100%' }}>
-        {getMedicationsLoading ? (
-          <Spin>Loading Data</Spin>
-        ) : (
-          <Col span={24}>{renderMedicationsTable()}</Col>
-        )}
+      <Row>
+        {/* Search Functionality */}
+        <Input.Search
+          placeholder="Search any medication by generic name, brand name and indication"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm as the user types
+          onSearch={handleSearch}
+          allowClear
+          size="large"
+          enterButton="Search"
+        />
+        {/* Render Medications Table */}
+        <Col>
+          <Row style={{ width: '100%' }}>
+            {getMedicationsLoading ? (
+              <Spin>Loading Data</Spin>
+            ) : (
+              <Col span={24}>{renderMedicationsTable()}</Col>
+            )}
+          </Row>
+        </Col>
       </Row>
     </>
   );
