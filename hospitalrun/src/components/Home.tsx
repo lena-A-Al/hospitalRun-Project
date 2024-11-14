@@ -10,30 +10,30 @@ export const Home = () => {
       disabled: false,
       url: `${appPathNames.patientInformation}`,
     },
-    {
-      title: 'Primary Care Doctor',
-      des: 'Contact info for your main doctor',
-      disabled: false,
-      url: `${appPathNames.primaryCareDoctor}`,
-    },
-    {
-      title: 'Medical Information',
-      des: 'Summary of medical history',
-      disabled: false,
-      url: `${appPathNames.medicalInformation}`,
-    },
+    // {
+    //   title: 'Primary Care Doctor',
+    //   des: 'Contact info for your main doctor',
+    //   disabled: false,
+    //   url: `${appPathNames.primaryCareDoctor}`,
+    // },
+    // {
+    //   title: 'Medical Information',
+    //   des: 'Summary of medical history',
+    //   disabled: false,
+    //   url: `${appPathNames.medicalInformation}`,
+    // },
     {
       title: 'Medications',
-      des: 'List of current and past prescriptions',
+      des: 'List of common medications',
       disabled: false,
-      url: `${appPathNames.medicalInformation}`,
+      url: `${appPathNames.medications}`,
     },
-    {
-      title: 'Appointments',
-      des: 'View, schedule, or manage appointments',
-      disabled: false,
-      url: `${appPathNames.appointments}`,
-    },
+    // {
+    //   title: 'Appointments',
+    //   des: 'View, schedule, or manage appointments',
+    //   disabled: false,
+    //   url: `${appPathNames.appointments}`,
+    // },
   ];
   return (
     <Row gutter={[0, 30]}>

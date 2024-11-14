@@ -4,6 +4,7 @@ export const typeDefs = gql`
   type Query {
     hello: String!
     user: [User!]!
+    medication: [Medication!]!
   }
 
   type Mutation {
@@ -17,6 +18,14 @@ export const typeDefs = gql`
       password: String
       race: String
     ): UserPayload
+  }
+
+  type Mutation {
+    medicationCreate(
+      genericName: String!
+      brandName: String!
+      indication: String!
+    ): MedicationPayload
   }
 
   type User {
@@ -39,5 +48,21 @@ export const typeDefs = gql`
   type UserPayload {
     UserErrors: [UserErrors!]
     user: User
+  }
+
+  type Medication {
+    id: ID!
+    genericName: String!
+    brandName: String!
+    indication: String!
+  }
+
+  type MedicationError {
+    message: String!
+  }
+
+  type MedicationPayload {
+    medicineErrors: [MedicationError!]
+    medication: Medication
   }
 `;

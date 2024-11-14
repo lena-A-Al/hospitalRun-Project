@@ -19,26 +19,22 @@ export const AppHeader = () => {
       label: 'Patient Information',
       order: 1,
     },
-    {
-      key: appPathNames.primaryCareDoctor,
-      label: 'Primary Care Doctor',
-      order: 2,
-    },
-    {
-      key: appPathNames.medicalInformation,
-      label: 'Medical Information',
-      order: 3,
-    },
+    // {
+    //   key: appPathNames.primaryCareDoctor,
+    //   label: 'Primary Care Doctor',
+    //   order: 2,
+    // },
+
     {
       key: appPathNames.medications,
       label: 'Medications',
-      order: 4,
+      order: 3,
     },
-    {
-      key: appPathNames.appointments,
-      label: 'Appointments',
-      order: 5,
-    },
+    // {
+    //   key: appPathNames.appointments,
+    //   label: 'Appointments',
+    //   order: 4,
+    // },
     {
       key: appPathNames.privacy,
       label: 'Privacy',

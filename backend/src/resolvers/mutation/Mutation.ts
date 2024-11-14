@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { Medication, User } from "@prisma/client";
 import { Context } from "../../index";
 
 interface userCreateIntyerface {
@@ -9,6 +9,17 @@ interface userCreateIntyerface {
   email: string;
   race: string;
   password: string;
+}
+
+interface medicineCreateInterface {
+  genericName: string;
+  brandName: string;
+  indication: string;
+}
+
+interface MedicinePlayLoadInterface {
+  medicineErrors: { message: string }[];
+  medication: Medication | null;
 }
 
 interface UserPayloadInterface {
@@ -44,6 +55,23 @@ export const Mutation = {
     return {
       userErrors: [],
       user: user,
+    };
+  },
+  medicationCreate: async (
+    parent: any,
+    { genericName, brandName, indication }: medicineCreateInterface,
+    { prisma }: Context
+  ): Promise<MedicinePlayLoadInterface> => {
+    const medication = await prisma.medication.create({
+      data: {
+        genericName,
+        brandName,
+        indication,
+      },
+    });
+    return {
+      medicineErrors: [],
+      medication: medication,
     };
   },
 };

@@ -8,9 +8,8 @@ import { appPathNames } from './common/utils/NavUtil';
 import { Appointments } from './components/Appointments';
 import { PrimaryCareDoctor } from './components/PrimaryCareDoctor';
 import React from 'react';
-import { MedicalInformation } from './components/MedicalInfo';
-import { Medications } from './components/Medications';
 import { Privacy } from './components/Privacy';
+import { Medications } from './components/Medications';
 
 const App = () => {
   return (
@@ -30,10 +29,6 @@ const App = () => {
           <Route
             path={`${appPathNames.primaryCareDoctor}`}
             element={<PrimaryCareDoctor />}
-          />
-          <Route
-            path={`${appPathNames.medicalInformation}`}
-            element={<MedicalInformation />}
           />
           <Route
             path={`${appPathNames.medications}`}
