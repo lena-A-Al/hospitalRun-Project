@@ -1,11 +1,15 @@
 import { gql, useLazyQuery } from '@apollo/client';
-import { Col, Input, Row, Spin, Table, Typography } from 'antd';
+import { Col, Input, Row, Select, Spin, Table, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 
+const { Option } = Select;
 export const Medications = () => {
   //local state
   const [medications, setMedications] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedMedication, setSelectedMedicatoion] = useState<
+    string | undefined
+  >(undefined);
   // Graphql Query
   // GraphQL Query
   const GET_MEDICATIONS_INFO = gql`
@@ -49,9 +53,9 @@ export const Medications = () => {
     get_medications({ variables: { searchTerm: value || null } });
   };
 
-  // const handleInputChange = (event: any) => {
-  //   setSearchTerm(event.target.value);
-  // };
+  const handleSelectChange = (value: string) => {
+    setSelectedMedicatoion(value);
+  };
 
   const renderMedicationsTable = () => {
     const columns: any[] = [
@@ -59,7 +63,7 @@ export const Medications = () => {
         title: 'Generic Name',
         dataIndex: 'genericName',
         key: 'genericName',
-        width: 400,
+        width: 700,
         sorter: false,
         render: (text: string) => (
           <Typography.Paragraph>{text}</Typography.Paragraph>
@@ -68,8 +72,7 @@ export const Medications = () => {
       {
         title: 'Brand Name',
         dataIndex: 'brandName',
-        key: 'brandName',
-        width: 400,
+        width: 700,
         sorter: false,
         render: (text: string) => (
           <Typography.Paragraph>{text}</Typography.Paragraph>
@@ -79,7 +82,7 @@ export const Medications = () => {
         title: 'Indication',
         dataIndex: 'indication',
         key: 'indication',
-        width: 350,
+        width: 700,
         sorter: false,
         render: (text: string) => (
           <Typography.Paragraph>{text}</Typography.Paragraph>
@@ -111,16 +114,36 @@ export const Medications = () => {
   return (
     <>
       <Row>
-        {/* Search Functionality */}
-        <Input.Search
-          placeholder="Search any medication by generic name, brand name and indication"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm as the user types
-          onSearch={handleSearch}
-          allowClear
-          size="large"
-          enterButton="Search"
-        />
+        <Col span={12} style={{ padding: '30px 10px' }}>
+          {/* Search Functionality */}
+          <Input.Search
+            placeholder="Search any medication by generic name, brand name and indication"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm as the user types
+            onSearch={handleSearch}
+            allowClear
+            size="large"
+            enterButton="Search"
+          />
+        </Col>
+
+        {/* Select a Medication From a List */}
+        <Col style={{ padding: '30px 10px' }}>
+          <Typography.Text strong style={{ paddingRight: '10px' }}>
+            Select a Medication
+          </Typography.Text>
+          <Select
+            placeholder="Search a Medication"
+            onChange={handleSelectChange}
+          >
+            {medications.map((med: any) => (
+              <Option key={med.id} value={med.brandName}>
+                {med.brandName}
+              </Option>
+            ))}
+          </Select>
+        </Col>
+
         {/* Render Medications Table */}
         <Col>
           <Row style={{ width: '100%' }}>
