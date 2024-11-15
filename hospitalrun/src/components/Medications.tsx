@@ -67,7 +67,7 @@ export const Medications = () => {
 
   const resetTable = () => {
     setMedications(allMedications);
-    setSelectedMedicatoion(undefined);
+    setSelectedMedicatoion('');
   };
 
   console.log('medications', medications);

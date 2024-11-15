@@ -23,7 +23,7 @@ export const Main = () => {
         </Layout.Content>
         {/* App Footer */}
         <Layout.Footer className="app-footer">
-          <AppFooter />
+          {/* <AppFooter /> */}
         </Layout.Footer>
       </Layout>
     </ConfigProvider>

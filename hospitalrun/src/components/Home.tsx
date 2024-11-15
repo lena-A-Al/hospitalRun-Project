@@ -1,6 +1,7 @@
 import { Card, Col, Row, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import { appPathNames } from '../common/utils/NavUtil';
+import { AppFooter } from '../core/components/footer/Footer';
 
 export const Home = () => {
   const tiles = [
@@ -73,6 +74,9 @@ export const Home = () => {
             );
           })}
         </Row>
+      </Col>
+      <Col>
+        <AppFooter />
       </Col>
     </Row>
   );
