@@ -15,8 +15,10 @@
     "@prisma/client": "^5.2.0",
     "apollo-server": "^3.12.0",
     "graphql": "^16.8.0",
+    "graphql-subscriptions": "^3.0.0",
     "nodemon": "^3.0.1",
-    "prisma": "^5.2.0"
+    "prisma": "^5.2.0",
+    "zeromq": "^6.1.2"
   },
   "devDependencies": {
     "@types/node": "^20.5.6",

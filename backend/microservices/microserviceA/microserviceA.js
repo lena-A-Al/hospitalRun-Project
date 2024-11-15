@@ -1,50 +1,44 @@
 import zmq from "zeromq";
 
-async function run() {
-  const sock = new zmq.Publisher();
+const sock = new zmq.Reply();
 
-  await sock.bind("tcp://127.0.0.1:3000");
-  console.log("Publisher bound to port 3000");
+/** Function to format the current date */
+const getCurrentDate = () => {
+  const now = new Date();
+  return now.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
 
-  while (true) {
-    const monthNames = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ];
-    const currentDate = new Date().toLocaleString();
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1;
-    const month_written = monthNames[today.getMonth()]; 
-    const date = today.getDate();
-    const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
+/** Function to start the Date Service */
+const startDateService = async () => {
+  console.log("Starting Date Service...");
+  await sock.bind("tcp://127.0.0.1:5556");
+  console.log("Date Service is listening on port 5556");
 
+  for await (const [msg] of sock) {
+    console.log("Inside for loop");
+    console.log("Received request:", msg.toString());
     
-    const messages = {
-      current_date: currentDate,
-      current_year: year.toString(),
-      current_month: month.toString(),
-      current_day: date.toString(),
-      current_date_formatted: `${month_written} ${date}, ${year}`,
-      current_date_slashes_formatted: `${month}/${date}/${year}`,
-      current_time: `${hours}:${minutes}:${seconds}`,
-      current_hours: hours.toString(),
-      current_minutes: minutes.toString(),
-      current_seconds: seconds.toString(),
+    if (msg.toString() === "getCurrentDate") {
+      const currentDate = getCurrentDate();
+      console.log("Sending response:", currentDate);
+      await sock.send(currentDate);
+    } else {
+      console.log("Unknown request:", msg.toString());
+      await sock.send("Unknown command");
     }
-
-    for (const [topic, message] of Object.entries(messages)) {
-      console.log(`Sending ${topic}: ${message}`);
-      await sock.send([topic, message]);
-    }
-
-    await new Promise((resolve) => {
-      setTimeout(resolve, 500);
-    })
   }
-}
+};
 
-run();
+// Proper cleanup on shutdown
+process.on("SIGINT", async () => {
+  console.log("Shutting down Date Service...");
+  await sock.close();
+  process.exit(0);
+});
+
+// Start the service
+startDateService();

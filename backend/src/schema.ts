@@ -5,6 +5,7 @@ export const typeDefs = gql`
     hello: String!
     user: [User!]!
     medication(searchTerm: String): [Medication!]!
+    currentDate: String! # New query for the current date
   }
 
   type Mutation {
