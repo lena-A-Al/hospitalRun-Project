@@ -6,6 +6,7 @@ const { Option } = Select;
 export const Medications = () => {
   //local state
   const [medications, setMedications] = useState<any[]>([]);
+  const [allMedications, setAllMedications] = useState<any[]>([]); // Store the full list of medications
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedMedication, setSelectedMedicatoion] = useState<
     string | undefined
@@ -38,14 +39,17 @@ export const Medications = () => {
   }, []);
 
   // Update medications when query result changes
+  // Update medications when query result changes
   useEffect(() => {
     if (getMedicationsRes) {
-      setMedications(
-        getMedicationsRes.medication.map((med: any, index: number) => ({
+      const meds = getMedicationsRes.medication.map(
+        (med: any, index: number) => ({
           ...med,
           key: med.id || index,
-        })),
+        }),
       );
+      setMedications(meds);
+      setAllMedications(meds); // Keep the full list intact
     }
   }, [getMedicationsRes]);
 
@@ -55,7 +59,18 @@ export const Medications = () => {
 
   const handleSelectChange = (value: string) => {
     setSelectedMedicatoion(value);
+    const filteredMedications = medications.filter(
+      (med: any) => med.brandName === value,
+    );
+    setMedications(filteredMedications);
   };
+
+  const resetTable = () => {
+    setMedications(allMedications);
+    setSelectedMedicatoion(undefined);
+  };
+
+  console.log('medications', medications);
 
   const renderMedicationsTable = () => {
     const columns: any[] = [
@@ -114,7 +129,7 @@ export const Medications = () => {
   return (
     <>
       <Row>
-        <Col span={12} style={{ padding: '30px 10px' }}>
+        <Col span={24} style={{ padding: '30px 10px' }}>
           {/* Search Functionality */}
           <Input.Search
             placeholder="Search any medication by generic name, brand name and indication"
@@ -129,19 +144,27 @@ export const Medications = () => {
 
         {/* Select a Medication From a List */}
         <Col style={{ padding: '30px 10px' }}>
-          <Typography.Text strong style={{ paddingRight: '10px' }}>
+          <Typography.Text strong style={{ padding: '10px' }}>
             Select a Medication
           </Typography.Text>
           <Select
             placeholder="Search a Medication"
             onChange={handleSelectChange}
+            style={{ width: '100%', paddingTop: '10px' }}
           >
             {medications.map((med: any) => (
-              <Option key={med.id} value={med.brandName}>
+              <Option
+                key={med.id}
+                value={med.brandName}
+                style={{ width: '100%' }}
+              >
                 {med.brandName}
               </Option>
             ))}
           </Select>
+          <button onClick={resetTable} style={{ marginTop: '10px' }}>
+            Reset Table
+          </button>
         </Col>
 
         {/* Render Medications Table */}
