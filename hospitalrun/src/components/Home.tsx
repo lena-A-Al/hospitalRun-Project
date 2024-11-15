@@ -2,8 +2,21 @@ import { Card, Col, Row, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import { appPathNames } from '../common/utils/NavUtil';
 import { AppFooter } from '../core/components/footer/Footer';
+import { gql, useQuery } from '@apollo/client';
 
 export const Home = () => {
+  const GET_CURRENT_DATE = gql`
+    query {
+      currentDate
+    }
+  `;
+
+  const { data, loading, error } = useQuery(GET_CURRENT_DATE);
+
+  console.log('Loading:', loading);
+  console.log('Error:', error);
+  console.log('Data:', data);
+
   const tiles = [
     {
       title: 'Patient Information',
@@ -38,6 +51,12 @@ export const Home = () => {
   ];
   return (
     <Row gutter={[0, 30]}>
+      <Col>
+        <Typography.Text strong>Current Date:</Typography.Text>
+      </Col>
+      <Col span={24}>
+        <Typography.Text strong>{data && data.currentDate}</Typography.Text>
+      </Col>
       <Col style={{ width: '100%', textAlign: 'center' }}>
         <Typography.Title level={1} italic>
           Hospital Run
