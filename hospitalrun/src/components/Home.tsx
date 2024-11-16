@@ -45,6 +45,17 @@ export const Home = () => {
     //   url: `${appPathNames.appointments}`,
     // },
   ];
+
+  const fetchWeather = async () => {
+    const url =
+      'https://api.open-meteo.com/v1/forecast?latitude=40.7128&longitude=-74.0060&current_weather=true';
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data.current_weather);
+  };
+
+  fetchWeather();
+  console.log('', fetchWeather());
   return (
     <Row gutter={[0, 30]}>
       <Col>
