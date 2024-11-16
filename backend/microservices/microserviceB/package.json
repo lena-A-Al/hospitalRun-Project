@@ -1,0 +1,17 @@
+{
+  "name": "microserviceb",
+  "version": "1.0.0",
+  "main": "microserviceB.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node microserviceB.js"
+
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "zeromq": "^6.1.2"
+  }
+}

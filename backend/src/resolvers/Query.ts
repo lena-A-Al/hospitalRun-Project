@@ -54,4 +54,33 @@ export const Query = {
       await sock.close();
     }
   },
+
+  randomNaturePicture: async () => {
+    const sock = new zmq.Request();
+
+    try {
+      await sock.connect("tcp://127.0.0.1:5557"); // Use a different port for this service
+      console.log("Connected to Nature Picture Service");
+
+      // Send a request to the microservice
+      console.log("Sending request to Nature Picture Service...");
+      await sock.send("getRandomPicture");
+
+      // Wait for the response
+      console.log("Waiting for response from Nature Picture Service...");
+      const [response] = await sock.receive();
+      const randomPictureUrl = response.toString();
+      console.log(
+        "Received response from Nature Picture Service:",
+        randomPictureUrl
+      );
+
+      return randomPictureUrl;
+    } catch (error) {
+      console.error("Error connecting to Nature Picture Service:", error);
+      throw new Error("Failed to fetch random nature picture");
+    } finally {
+      await sock.close();
+    }
+  },
 };

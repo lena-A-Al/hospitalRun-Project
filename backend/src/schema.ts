@@ -6,6 +6,7 @@ export const typeDefs = gql`
     user: [User!]!
     medication(searchTerm: String): [Medication!]!
     currentDate: String! # New query for the current date
+    randomNaturePicture: String! # Query for fetching a random nature picture
   }
 
   type Mutation {

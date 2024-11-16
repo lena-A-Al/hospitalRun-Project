@@ -13,10 +13,6 @@ export const Home = () => {
 
   const { data, loading, error } = useQuery(GET_CURRENT_DATE);
 
-  console.log('Loading:', loading);
-  console.log('Error:', error);
-  console.log('Data:', data);
-
   const tiles = [
     {
       title: 'Patient Information',
