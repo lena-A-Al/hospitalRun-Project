@@ -10,6 +10,7 @@ import { PrimaryCareDoctor } from './components/PrimaryCareDoctor';
 import React from 'react';
 import { Privacy } from './components/Privacy';
 import { Medications } from './components/Medications';
+import { HealingImage } from './components/HealingImage';
 
 const App = () => {
   return (
@@ -38,8 +39,8 @@ const App = () => {
             path={`${appPathNames.appointments}`}
             element={<Appointments />}
           />
-
           <Route path={`${appPathNames.privacy}`} element={<Privacy />} />
+          <Route path={`${appPathNames.healingImage}`} element={<HealingImage />} />
         </Route>
       </Routes>
       {/* </div> */}

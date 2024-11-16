@@ -5,7 +5,8 @@ export type HospitalRunApp =
   | 'medicalInformation'
   | 'medications'
   | 'appointments'
-  | 'privacy';
+  | 'privacy'
+  |'healingImage'
 
 export const appPathNames: { [key in HospitalRunApp]: string } = {
   home: '/',
@@ -15,4 +16,5 @@ export const appPathNames: { [key in HospitalRunApp]: string } = {
   medications: '/medications',
   appointments: '/appointments',
   privacy: '/Privacy',
+  healingImage: '/healingImage'
 };

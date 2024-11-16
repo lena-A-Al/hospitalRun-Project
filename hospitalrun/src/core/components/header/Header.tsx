@@ -40,6 +40,11 @@ export const AppHeader = () => {
       label: 'Privacy',
       order: 5,
     },
+    {
+      key: appPathNames.healingImage,
+      label: 'healing Image',
+      order: 5,
+    },
   ];
   return (
     <>
