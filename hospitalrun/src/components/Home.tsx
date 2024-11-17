@@ -23,6 +23,7 @@ export const Home = () => {
     error: currentDateError,
   } = useQuery(GET_CURRENT_DATE);
 
+  console.log('currentDateRes', currentDateRes);
   const {
     data: getWeatherInNYCRes,
     loading: getWeatherLoading,

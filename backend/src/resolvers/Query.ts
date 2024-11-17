@@ -30,26 +30,52 @@ export const Query = {
   },
 
   // Microservice A
+  // currentDate: async () => {
+  //   const sock = new zmq.Request();
+
+  //   try {
+  //     await sock.connect("tcp://127.0.0.1:5556");
+  //     console.log("Connected to Date Service");
+
+  //     // Send a request to the microservice
+  //     console.log("Sending request to Date Service...");
+  //     // await sock.send("getCurrentDate");
+
+  //     // Wait for the response
+  //     console.log("Waiting for response from Date Service...");
+  //     const [response] = await sock.receive();
+  //     const currentDate = response.toString();
+  //     console.log("Received response from Date Service:", currentDate);
+
+  //     return currentDate;
+  //   } catch (error) {
+  //     console.error("Error connecting to Date Service:", error);
+  //     throw new Error("Failed to fetch current date");
+  //   } finally {
+  //     await sock.close();
+  //   }
+  // },
   currentDate: async () => {
     const sock = new zmq.Request();
 
     try {
+      // Connect to the microservice
       await sock.connect("tcp://127.0.0.1:5556");
-      console.log("Connected to Date Service");
+      console.log("Connected to Date Microservice");
 
       // Send a request to the microservice
-      console.log("Sending request to Date Service...");
-      await sock.send("getCurrentDate");
+      console.log("Sending request for current_date...");
+      await sock.send("current_date"); // Ensure this matches the topic
 
       // Wait for the response
-      console.log("Waiting for response from Date Service...");
+      console.log("Waiting for response...");
       const [response] = await sock.receive();
-      const currentDate = response.toString();
-      console.log("Received response from Date Service:", currentDate);
+      console.log("Received response:", response.toString());
 
-      return currentDate;
+      // Return the message as the result
+      return response.toString();
     } catch (error) {
-      console.error("Error connecting to Date Service:", error);
+      console.error("Error in currentDate resolver:", error);
       throw new Error("Failed to fetch current date");
     } finally {
       await sock.close();
