@@ -67,27 +67,37 @@ export const Home = () => {
   return (
     <Row gutter={[0, 30]}>
       <Row style={{ padding: '20px' }}>
-        <Col>
-          <Typography.Text strong style={{ fontSize: '20px' }}>
-            Current Date:
-          </Typography.Text>
-        </Col>
-        <Col span={12}>
-          <Typography.Text
-            strong
-            style={{ color: 'darkgoldenrod', fontSize: '20px' }}
-          >
-            {currentDateRes && currentDateRes.currentDate}
-          </Typography.Text>
-        </Col>
-        <Col span={12}>
-          <Typography.Text
-            strong
-            style={{ color: 'darkblue', fontSize: '20px' }}
-          >
-            {getWeatherInNYCRes && getWeatherInNYCRes.weatherInNYC}
-          </Typography.Text>
-        </Col>
+        <Row>
+          {' '}
+          <Col>
+            <Typography.Text strong style={{ fontSize: '20px' }}>
+              Current Date:
+            </Typography.Text>
+          </Col>
+          <Col span={16}>
+            <Typography.Text
+              strong
+              style={{ color: 'darkgoldenrod', fontSize: '20px' }}
+            >
+              {currentDateRes && currentDateRes.currentDate}
+            </Typography.Text>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Typography.Text strong style={{ fontSize: '20px' }}>
+              Current Weather in New York:
+            </Typography.Text>
+          </Col>
+          <Col span={16}>
+            <Typography.Text
+              strong
+              style={{ color: 'darkblue', fontSize: '20px' }}
+            >
+              {getWeatherInNYCRes && getWeatherInNYCRes.weatherInNYC}
+            </Typography.Text>
+          </Col>
+        </Row>
       </Row>
       <Col style={{ width: '100%', textAlign: 'center' }}>
         <Typography.Title level={1} italic>
