@@ -8,6 +8,7 @@ export const typeDefs = gql`
     currentDate: String! # New query for the current date
     randomNaturePicture: String! # Query for fetching a random nature picture
     weatherInNYC: String! # New query to get weather data
+    helathyTip: String!
   }
 
   type Mutation {

@@ -8,10 +8,24 @@ export const HealingImage = () => {
       randomNaturePicture
     }
   `;
+
+  const GET_HELATHY_TIP = gql`
+    query {
+      helathyTip
+    }
+  `;
+
   // const { data, loading, error }] = useQuery(GET_RANDOM_IMAGE);
   const [getRandomImages, { data, loading, error }] =
     useLazyQuery(GET_RANDOM_IMAGE);
 
+  const {
+    data: getHelathyTipRes,
+    loading: getHelathyTipLoading,
+    error: getHelathyError,
+  } = useQuery(GET_HELATHY_TIP);
+
+  console.log('getHelathyTipRes', getHelathyTipRes);
   useEffect(() => {
     getRandomImages();
   }, [getRandomImages]);
@@ -49,6 +63,11 @@ export const HealingImage = () => {
             alt="Random Nature"
             style={{ width: '800px' }}
           />
+        </Col>
+        <Col span={24} style={{ padding: '10px 0' }}>
+          <Typography.Text strong style={{ fontSize: '20px' }}>
+            {getHelathyTipRes && getHelathyTipRes.helathyTip}
+          </Typography.Text>
         </Col>
       </Row>
     </>

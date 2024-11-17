@@ -30,31 +30,6 @@ export const Query = {
   },
 
   // Microservice A
-  // currentDate: async () => {
-  //   const sock = new zmq.Request();
-
-  //   try {
-  //     await sock.connect("tcp://127.0.0.1:5556");
-  //     console.log("Connected to Date Service");
-
-  //     // Send a request to the microservice
-  //     console.log("Sending request to Date Service...");
-  //     // await sock.send("getCurrentDate");
-
-  //     // Wait for the response
-  //     console.log("Waiting for response from Date Service...");
-  //     const [response] = await sock.receive();
-  //     const currentDate = response.toString();
-  //     console.log("Received response from Date Service:", currentDate);
-
-  //     return currentDate;
-  //   } catch (error) {
-  //     console.error("Error connecting to Date Service:", error);
-  //     throw new Error("Failed to fetch current date");
-  //   } finally {
-  //     await sock.close();
-  //   }
-  // },
   currentDate: async () => {
     const sock = new zmq.Request();
 
@@ -139,6 +114,32 @@ export const Query = {
     } catch (error) {
       console.error("Error connecting to Weather Service:", error);
       throw new Error("Failed to fetch weather data");
+    } finally {
+      await sock.close();
+    }
+  },
+
+  helathyTip: async () => {
+    const sock = new zmq.Request();
+
+    try {
+      // Connect to the Healthy Tips Microservice
+      await sock.connect("tcp://127.0.0.1:5560");
+      console.log("Connected to Healthy Tips Microservice");
+
+      // Send a request to get the next health tip
+      console.log("Requesting a healthy tip...");
+      await sock.send("getTip");
+
+      // Wait for the response
+      const [response] = await sock.receive();
+      console.log("Received tip:", response.toString());
+
+      // Return the response as the result
+      return response.toString();
+    } catch (error) {
+      console.error("Error in healthyTip resolver:", error);
+      throw new Error("Failed to fetch a healthy tip");
     } finally {
       await sock.close();
     }
