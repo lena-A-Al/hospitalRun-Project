@@ -29,6 +29,7 @@ export const Query = {
     });
   },
 
+  // Microservice A
   currentDate: async () => {
     const sock = new zmq.Request();
 
@@ -55,6 +56,7 @@ export const Query = {
     }
   },
 
+  // Microservice B
   randomNaturePicture: async () => {
     const sock = new zmq.Request();
 
@@ -79,6 +81,38 @@ export const Query = {
     } catch (error) {
       console.error("Error connecting to Nature Picture Service:", error);
       throw new Error("Failed to fetch random nature picture");
+    } finally {
+      await sock.close();
+    }
+  },
+
+  // Microservice C
+  weatherInNYC: async () => {
+    const sock = new zmq.Request();
+
+    try {
+      // Connect to the weather microservice
+      await sock.connect("tcp://127.0.0.1:5559");
+      console.log("Connected to Weather Service");
+
+      // Send a request to the weather microservice
+      console.log("Sending request to Weather Service...");
+      await sock.send("getWeather");
+
+      // Wait for the response
+      console.log("Waiting for response from Weather Service...");
+      const [response] = await sock.receive();
+      const weatherInfo = response.toString();
+      console.log("Received response from Weather Service:", weatherInfo);
+
+      if (!weatherInfo) {
+        throw new Error("No weather data received");
+      }
+
+      return weatherInfo;
+    } catch (error) {
+      console.error("Error connecting to Weather Service:", error);
+      throw new Error("Failed to fetch weather data");
     } finally {
       await sock.close();
     }

@@ -11,7 +11,23 @@ export const Home = () => {
     }
   `;
 
-  const { data, loading, error } = useQuery(GET_CURRENT_DATE);
+  const GET_WEATHER_IN_NYC = gql`
+    query {
+      weatherInNYC
+    }
+  `;
+
+  const {
+    data: currentDateRes,
+    loading: currentDateLoading,
+    error: currentDateError,
+  } = useQuery(GET_CURRENT_DATE);
+
+  const {
+    data: getWeatherInNYCRes,
+    loading: getWeatherLoading,
+    error,
+  } = useQuery(GET_WEATHER_IN_NYC);
 
   const tiles = [
     {
@@ -46,24 +62,33 @@ export const Home = () => {
     // },
   ];
 
-  const fetchWeather = async () => {
-    const url =
-      'https://api.open-meteo.com/v1/forecast?latitude=40.7128&longitude=-74.0060&current_weather=true';
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data.current_weather);
-  };
+  console.log('getWeatherInNYCRes', getWeatherInNYCRes);
 
-  fetchWeather();
-  console.log('', fetchWeather());
   return (
     <Row gutter={[0, 30]}>
-      <Col>
-        <Typography.Text strong>Current Date:</Typography.Text>
-      </Col>
-      <Col span={24}>
-        <Typography.Text strong>{data && data.currentDate}</Typography.Text>
-      </Col>
+      <Row style={{ padding: '20px' }}>
+        <Col>
+          <Typography.Text strong style={{ fontSize: '20px' }}>
+            Current Date:
+          </Typography.Text>
+        </Col>
+        <Col span={12}>
+          <Typography.Text
+            strong
+            style={{ color: 'darkgoldenrod', fontSize: '20px' }}
+          >
+            {currentDateRes && currentDateRes.currentDate}
+          </Typography.Text>
+        </Col>
+        <Col span={12}>
+          <Typography.Text
+            strong
+            style={{ color: 'darkblue', fontSize: '20px' }}
+          >
+            {getWeatherInNYCRes && getWeatherInNYCRes.weatherInNYC}
+          </Typography.Text>
+        </Col>
+      </Row>
       <Col style={{ width: '100%', textAlign: 'center' }}>
         <Typography.Title level={1} italic>
           Hospital Run

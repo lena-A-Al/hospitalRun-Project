@@ -1,5 +1,6 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useLazyQuery, useQuery } from '@apollo/client';
 import { Col, Row, Typography } from 'antd';
+import { useEffect } from 'react';
 
 export const HealingImage = () => {
   const GET_RANDOM_IMAGE = gql`
@@ -7,7 +8,13 @@ export const HealingImage = () => {
       randomNaturePicture
     }
   `;
-  const { data, loading, error } = useQuery(GET_RANDOM_IMAGE);
+  // const { data, loading, error }] = useQuery(GET_RANDOM_IMAGE);
+  const [getRandomImages, { data, loading, error }] =
+    useLazyQuery(GET_RANDOM_IMAGE);
+
+  useEffect(() => {
+    getRandomImages();
+  }, [getRandomImages]);
   return (
     <>
       <Row

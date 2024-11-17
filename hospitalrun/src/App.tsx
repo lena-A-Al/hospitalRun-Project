@@ -40,7 +40,10 @@ const App = () => {
             element={<Appointments />}
           />
           <Route path={`${appPathNames.privacy}`} element={<Privacy />} />
-          <Route path={`${appPathNames.healingImage}`} element={<HealingImage />} />
+          <Route
+            path={`${appPathNames.healingImage}`}
+            element={<HealingImage key={Date.now()} />}
+          />
         </Route>
       </Routes>
       {/* </div> */}
