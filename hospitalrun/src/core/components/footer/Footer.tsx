@@ -5,20 +5,15 @@ export const AppFooter = () => {
   return (
     <>
       <Row>
-        <Row
-          style={{ width: '100%', display: 'flex', height: '100%' }}
-          // justify={'center'}
-          // align="middle"
-        >
-          <Col style={{ flexGrow: 1 }}>
+        <Row style={{ width: '80%', display: 'flex', height: '100%' }}>
+          <Col style={{ flexGrow: 1 }} span={12}>
             <img
               src={hospitalRun}
               alt="logo"
               style={{ width: '10%', borderRadius: '50%', margin: '0 5px 0' }}
             />
-            {/* <h2>Hospital Run</h2> */}
           </Col>
-          <Col>
+          <Col span={12}>
             <ul style={{ listStyleType: 'none' }}>
               <li>
                 <a

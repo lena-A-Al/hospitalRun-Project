@@ -78,80 +78,90 @@ export const Home = () => {
   console.log('getWeatherInNYCRes', getWeatherInNYCRes);
 
   return (
-    <Row gutter={[0, 30]}>
-      <Row style={{ padding: '20px' }}>
-        <Row>
-          {' '}
-          <Col>
-            <Typography.Text strong style={{ fontSize: '20px' }}>
-              Current Date:
-            </Typography.Text>
-          </Col>
-          <Col span={16}>
-            <Typography.Text
-              strong
-              style={{ color: 'darkgoldenrod', fontSize: '20px' }}
-            >
-              {currentDateRes && currentDateRes.currentDate}
-            </Typography.Text>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Typography.Text strong style={{ fontSize: '20px' }}>
-              Current Weather in New York:
-            </Typography.Text>
-          </Col>
-          <Col span={16}>
-            <Typography.Text
-              strong
-              style={{ color: 'darkblue', fontSize: '20px' }}
-            >
-              {getWeatherInNYCRes && getWeatherInNYCRes.weatherInNYC}
-            </Typography.Text>
-          </Col>
-        </Row>
-      </Row>
-      <Col style={{ width: '100%', textAlign: 'center' }}>
-        <Typography.Title level={1} italic>
-          Hospital Run
-        </Typography.Title>
-        <Typography.Paragraph style={{ fontSize: 22 }}>
-          A patient portal is a secure online platform that allows patients to
-          review their personal information, medical history, and the name of
-          their primary care doctor. It provides easy access to essential health
-          details, helping patients stay informed and organized.
-        </Typography.Paragraph>
-      </Col>
-
-      <Col span={24}>
-        <Row justify={'center'} align="middle">
-          {tiles.map((app, i) => {
-            return (
-              <Link to={app.url} key={app.title}>
-                <Card
-                  hoverable={true}
-                  style={{
-                    width: 450,
-                    //   minHeight: 235,
-                    textAlign: 'center',
-                    margin: 4,
-                  }}
+    <div className="page-container">
+      {/* Main Content */}
+      <div className="content-wrap">
+        <Row gutter={[0, 30]}>
+          <Row style={{ padding: '20px' }}>
+            <Row>
+              <Col>
+                <Typography.Text
+                  strong
+                  style={{ fontSize: '20px', backgroundColor: 'lightcoral' }}
                 >
-                  <Card.Meta
-                    title={app.title}
-                    description={app.des}
-                    style={{ fontSize: 16 }}
-                  />
-                </Card>
-              </Link>
-            );
-          })}
+                  Current Date:
+                </Typography.Text>
+              </Col>
+              <Col span={16}>
+                <Typography.Text
+                  strong
+                  style={{ color: 'darkgoldenrod', fontSize: '20px' }}
+                >
+                  {currentDateRes && currentDateRes.currentDate}
+                </Typography.Text>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Typography.Text
+                  strong
+                  style={{ fontSize: '20px', backgroundColor: 'lightcoral' }}
+                >
+                  Current Weather in New York:
+                </Typography.Text>
+              </Col>
+              <Col span={16}>
+                <Typography.Text
+                  strong
+                  style={{ color: 'darkblue', fontSize: '20px' }}
+                >
+                  {getWeatherInNYCRes && getWeatherInNYCRes.weatherInNYC}
+                </Typography.Text>
+              </Col>
+            </Row>
+          </Row>
+          <Col style={{ width: '100%', textAlign: 'center' }}>
+            <Typography.Title level={1} italic>
+              Hospital Run
+            </Typography.Title>
+            <Typography.Paragraph style={{ fontSize: 22 }}>
+              A patient portal is a secure online platform that allows patients
+              to review their personal information, medical history, and the
+              name of their primary care doctor. It provides easy access to
+              essential health details, helping patients stay informed and
+              organized.
+            </Typography.Paragraph>
+          </Col>
+
+          <Col span={24}>
+            <Row justify={'center'} align="middle">
+              {tiles.map((app, i) => {
+                return (
+                  <Link to={app.url} key={app.title}>
+                    <Card
+                      hoverable={true}
+                      style={{
+                        width: 450,
+                        //   minHeight: 235,
+                        textAlign: 'center',
+                        margin: 4,
+                      }}
+                    >
+                      <Card.Meta
+                        title={app.title}
+                        description={app.des}
+                        style={{ fontSize: 16 }}
+                      />
+                    </Card>
+                  </Link>
+                );
+              })}
+            </Row>
+          </Col>
         </Row>
-      </Col>
-      <Col>
-        <AppFooter />
-      </Col>
-    </Row>
+      </div>
+      {/* Footer */}
+      <AppFooter />
+    </div>
   );
 };
