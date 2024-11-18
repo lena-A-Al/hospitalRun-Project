@@ -14,11 +14,11 @@ export const AppHeader = () => {
   // constants
   const menuItems: AppHeaderMenuItem[] = [
     { key: appPathNames.home, label: 'Home', order: 0 },
-    {
-      key: appPathNames.patientInformation,
-      label: 'Patient Information',
-      order: 1,
-    },
+    // {
+    //   key: appPathNames.patientInformation,
+    //   label: 'Patient Information',
+    //   order: 1,
+    // },
     // {
     //   key: appPathNames.primaryCareDoctor,
     //   label: 'Primary Care Doctor',

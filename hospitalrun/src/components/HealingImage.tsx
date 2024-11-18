@@ -19,16 +19,24 @@ export const HealingImage = () => {
   const [getRandomImages, { data, loading, error }] =
     useLazyQuery(GET_RANDOM_IMAGE);
 
-  const {
-    data: getHelathyTipRes,
-    loading: getHelathyTipLoading,
-    error: getHelathyError,
-  } = useQuery(GET_HELATHY_TIP);
+  const [
+    getHelathyTip,
+    {
+      data: getHelathyTipRes,
+      loading: getHelathyTipLoading,
+      error: getHelathyError,
+    },
+  ] = useLazyQuery(GET_HELATHY_TIP);
 
-  console.log('getHelathyTipRes', getHelathyTipRes);
+  // useEffect(() => {
+  //   getRandomImages();
+  //   getHelathyTip();
+  // }, [getRandomImages, getHelathyTip]);
   useEffect(() => {
     getRandomImages();
-  }, [getRandomImages]);
+    getHelathyTip();
+  }, [getRandomImages, getHelathyTip]);
+
   return (
     <>
       <Row
@@ -65,7 +73,11 @@ export const HealingImage = () => {
           />
         </Col>
         <Col span={24} style={{ padding: '10px 0' }}>
-          <Typography.Text strong style={{ fontSize: '20px' }}>
+          <Typography.Text
+            strong
+            style={{ fontSize: '20px', backgroundColor: 'lightcoral' }}
+            italic
+          >
             {getHelathyTipRes && getHelathyTipRes.helathyTip}
           </Typography.Text>
         </Col>

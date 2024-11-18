@@ -31,12 +31,12 @@ export const Home = () => {
   } = useQuery(GET_WEATHER_IN_NYC);
 
   const tiles = [
-    {
-      title: 'Patient Information',
-      des: 'View and update personal details.',
-      disabled: false,
-      url: `${appPathNames.patientInformation}`,
-    },
+    // {
+    //   title: 'Patient Information',
+    //   des: 'View and update personal details.',
+    //   disabled: false,
+    //   url: `${appPathNames.patientInformation}`,
+    // },
     // {
     //   title: 'Primary Care Doctor',
     //   des: 'Contact info for your main doctor',
@@ -51,7 +51,7 @@ export const Home = () => {
     // },
     {
       title: 'Medications',
-      des: 'List of common medications',
+      des: 'View a list of the most common medications along with their uses and essential details',
       disabled: false,
       url: `${appPathNames.medications}`,
     },
@@ -61,6 +61,18 @@ export const Home = () => {
     //   disabled: false,
     //   url: `${appPathNames.appointments}`,
     // },
+    {
+      title: 'Privacy',
+      des: 'Learn about how your data is securely stored and protected to ensure your privacy.',
+      disabled: false,
+      url: `${appPathNames.privacy}`,
+    },
+    {
+      title: 'Healing Image',
+      des: 'Discover a random therapeutic image accompanied by a healthy tip to promote well-being.',
+      disabled: false,
+      url: `${appPathNames.healingImage}`,
+    },
   ];
 
   console.log('getWeatherInNYCRes', getWeatherInNYCRes);
