@@ -83,7 +83,7 @@ export const Home = () => {
       <div className="content-wrap">
         <Row gutter={[0, 30]}>
           <Row style={{ padding: '20px' }}>
-            <Row>
+            <Row style={{ display: 'flex', justifyContent: 'space-between' }}>
               <Col>
                 <Typography.Text
                   strong
