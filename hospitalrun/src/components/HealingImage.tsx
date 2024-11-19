@@ -1,5 +1,5 @@
 import { gql, useLazyQuery, useQuery } from '@apollo/client';
-import { Col, Row, Typography } from 'antd';
+import { Col, Row, Space, Spin, Typography } from 'antd';
 import { useEffect } from 'react';
 
 export const HealingImage = () => {
@@ -16,26 +16,25 @@ export const HealingImage = () => {
   `;
 
   // const { data, loading, error }] = useQuery(GET_RANDOM_IMAGE);
-  const [getRandomImages, { data, loading, error }] =
-    useLazyQuery(GET_RANDOM_IMAGE);
+  const {
+    data,
+    loading: imageLoading,
+    error,
+    refetch: refetchImage,
+  } = useQuery(GET_RANDOM_IMAGE);
 
-  const [
-    getHelathyTip,
-    {
-      data: getHelathyTipRes,
-      loading: getHelathyTipLoading,
-      error: getHelathyError,
-    },
-  ] = useLazyQuery(GET_HELATHY_TIP);
+  console.log('image loading', imageLoading);
+  const {
+    data: getHelathyTipRes,
+    loading: getHelathyTipLoading,
+    error: getHelathyError,
+    refetch: reftechTip,
+  } = useQuery(GET_HELATHY_TIP);
 
-  // useEffect(() => {
-  //   getRandomImages();
-  //   getHelathyTip();
-  // }, [getRandomImages, getHelathyTip]);
   useEffect(() => {
-    getRandomImages();
-    getHelathyTip();
-  }, [getRandomImages, getHelathyTip]);
+    refetchImage();
+    reftechTip();
+  }, [imageLoading]);
 
   return (
     <>
@@ -65,13 +64,20 @@ export const HealingImage = () => {
             visuals and let your worries drift away
           </Typography.Paragraph>
         </Col>
-        <Col span={24} style={{ padding: '10px 0' }}>
-          <img
-            src={data && data.randomNaturePicture}
-            alt="Random Nature"
-            style={{ width: '800px' }}
-          />
-        </Col>
+        {imageLoading ? (
+          <Space size="middle">
+            <Spin size="large" />
+          </Space>
+        ) : (
+          <Col span={24} style={{ padding: '10px 0' }}>
+            <img
+              src={data && data.randomNaturePicture}
+              alt="Random Nature"
+              style={{ width: '800px' }}
+            />
+          </Col>
+        )}
+
         <Col span={24} style={{ padding: '10px 0' }}>
           <Typography.Text
             strong
