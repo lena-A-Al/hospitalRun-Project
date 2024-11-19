@@ -1,4 +1,4 @@
-import { Card, Col, Row, Typography } from 'antd';
+import { Card, Col, Row, Space, Spin, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import { appPathNames } from '../common/utils/NavUtil';
 import { AppFooter } from '../core/components/footer/Footer';
@@ -92,14 +92,20 @@ export const Home = () => {
                   Current Date:
                 </Typography.Text>
               </Col>
-              <Col span={16}>
-                <Typography.Text
-                  strong
-                  style={{ color: 'darkgoldenrod', fontSize: '20px' }}
-                >
-                  {currentDateRes && currentDateRes.currentDate}
-                </Typography.Text>
-              </Col>
+              {currentDateLoading ? (
+                <Space size="middle">
+                  <Spin size="large" />
+                </Space>
+              ) : (
+                <Col span={16}>
+                  <Typography.Text
+                    strong
+                    style={{ color: 'darkgoldenrod', fontSize: '20px' }}
+                  >
+                    {currentDateRes && currentDateRes.currentDate}
+                  </Typography.Text>
+                </Col>
+              )}
             </Row>
             <Row>
               <Col>
@@ -110,14 +116,25 @@ export const Home = () => {
                   Current Weather in New York:
                 </Typography.Text>
               </Col>
-              <Col span={16}>
-                <Typography.Text
-                  strong
-                  style={{ color: 'darkblue', fontSize: '20px' }}
-                >
-                  {getWeatherInNYCRes && getWeatherInNYCRes.weatherInNYC}
-                </Typography.Text>
-              </Col>
+              {getWeatherLoading ? (
+                <Col span={16}>
+                  <Typography.Text
+                    strong
+                    style={{ color: 'darkblue', fontSize: '20px' }}
+                  >
+                    {getWeatherInNYCRes && getWeatherInNYCRes.weatherInNYC}
+                  </Typography.Text>
+                </Col>
+              ) : (
+                <Col span={16}>
+                  <Typography.Text
+                    strong
+                    style={{ color: 'darkblue', fontSize: '20px' }}
+                  >
+                    {getWeatherInNYCRes && getWeatherInNYCRes.weatherInNYC}
+                  </Typography.Text>
+                </Col>
+              )}
             </Row>
           </Row>
           <Col style={{ width: '100%', textAlign: 'center' }}>
